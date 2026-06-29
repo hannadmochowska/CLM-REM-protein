@@ -1,0 +1,2 @@
+model,embedding_dim,regressor,max_iter,split_random_r,split_random_rmse,split_scaffold_r_mean,split_scaffold_r_std,split_scaffold_rmse,n_compounds,target,notes
+ibm/MoLFormer-XL-both-10pct,768,"MLP (256, 128)",200,0.6731307001210801,0.6963700776905277,0.4353944842259313,0.3197847160955703,1.1276551928354912,357,GABRA1,"MoLFormer-XL (45M), mean pooling, inference-only, no protein embedding"
