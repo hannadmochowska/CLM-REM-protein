@@ -70,7 +70,7 @@ Full scientific methodology, results, and discussion are in the project report, 
 │
 └── exploratory analysis/           # Early/superseded work, not part of the final pipeline
     ├── CLM_REM_protein-ChemBERTa-1.ipynb      # Early exploratory notebook
-    ├── EGFR_MolFormer_classification_template.ipynb   # Course starter template (RaulFD-creator/BiotechWorkshopAI, formerly Sesion1.ipynb): EGFR binary classification, not this project's REM targets or regression task
+    ├── EGFR_MolFormer_classification_template.ipynb   # EGFR binary classification, not this project's REM targets or regression task
     └── MoLFormer_XL_with_full_fine_tuning_.ipynb
 ```
 
