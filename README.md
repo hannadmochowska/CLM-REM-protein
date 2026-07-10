@@ -39,7 +39,7 @@ Full scientific methodology, results, and discussion are in the project report, 
 ├── .streamlit/
 │   └── config.toml                 # App theme/server config
 │
-├── HCRTR1/                         # Week 1 pilot: representation/fine-tuning comparison on HCRTR1 only
+├── HCRTR1/                         # Pilot: representation/fine-tuning comparison on HCRTR1 only
 │   ├── ChemBERTa_2+MLP.ipynb
 │   ├── ChemBERTa_2_fine_tuning.ipynb
 │   ├── MoLFormer_XL+MLP.ipynb
