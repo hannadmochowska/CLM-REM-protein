@@ -210,15 +210,3 @@ A download button exports predictions as CSV. The four pharmacological reference
 ### 10. Deployment
 
 Deployed on HuggingFace Spaces, Docker runtime, CPU Basic instance (2 vCPU, 16 GB RAM). Dependencies pinned in `requirements.txt` to avoid known incompatibilities: `transformers<5.0` (the onnx module was removed in v5), `tokenizers>=0.20.0` (required for Python 3.13 compatibility), and `matplotlib` (required by Streamlit's `background_gradient` formatter used in the heatmap table). App theme/server config: `.streamlit/config.toml`.
-
-## Citation
-
-Dmochowska, H. (2026). *Predicting Small-Molecule Binding Affinity to REM Sleep-Regulatory Protein Targets Using Chemical Language Models*. MSc Artificial Intelligence in Medicine, University College Dublin.
-
-## License
-
-Code is released under the [MIT License](./LICENSE). ChEMBL data is distributed under [CC BY-SA 3.0](https://www.ebi.ac.uk/about/terms-of-use); see [Mendez et al., 2019](https://doi.org/10.1093/nar/gky1075).
-
-## Acknowledgments
-
-Supervised by Denis Shields (ShieldsLab, UCD). Developed as part of the MSc Artificial Intelligence in Medicine program at University College Dublin.
