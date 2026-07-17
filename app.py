@@ -1,23 +1,12 @@
-"""
-app.py — REM Sleep Selectivity Profiler
-Streamlit interface implementing design handoff "2a" (warm lab report on white).
-SMILES -> predicted pChEMBL across 6 CNS targets, presented as:
-header + target pills, input/method, example compounds, heatmap table,
-interactive grouped-bar selectivity chart, and a collapsible reliability panel.
-Design layer follows design_handoff_selectivity_profiler / option 2a exactly.
-Prediction stays in Python (predict.py: MoLFormer-XL + MLP regressors); the
-heatmap table and chart appear once a prediction succeeds.
-"""
-
 import json
 import streamlit as st
 import streamlit.components.v1 as components
 
-from predict import validate_smiles, TARGETS  # heavy model imports are lazy (see get_models)
+from predict import validate_smiles, TARGETS
 
-# ── Design tokens ───────────────────────────────────────────────────────────────
-ACCENT   = "#1f3a5f"                                        # navy (themeable --accent)
-CCOLORS  = ["#1f3a5f", "#6f9fc0", "#b5502f", "#d99a80"]     # compound series (Warm palette)
+#Design tokens
+ACCENT   = "#1f3a5f"                                      
+CCOLORS  = ["#1f3a5f", "#6f9fc0", "#b5502f", "#d99a80"]     
 TIER_COL = {"high": "#2f9e63", "mid": "#c98a1e", "low": "#c9485b"}
 
 EXAMPLES = [
@@ -46,7 +35,7 @@ CAVEATS = [
     "IC50-equivalent values are estimated as 10^(9 − pChEMBL) nM. pChEMBL is a standardised −log10(molar) scale that aggregates IC50, Ki, Kd and EC50 measurements — the displayed IC50 is an approximation and may not match a direct IC50 assay.",
 ]
 
-# ── Heatmap color math (ported from the prototype Component) ────────────────────
+#Heatmap color math
 def _heat_rgb(v: float):
     d0, d1 = 4.5, 9.0
     t = max(0.0, min(1.0, (v - d0) / (d1 - d0)))
@@ -77,7 +66,7 @@ def pchembl_to_ic50_str(v: float) -> str:
     else:
         return f"{nm / 1000:.1f} µM"
 
-# ── Model loading (cached; imports torch/transformers lazily) ───────────────────
+# Model loading
 @st.cache_resource(show_spinner="Loading MoLFormer-XL and MLP models (first run only)…")
 def get_models():
     from predict import load_molformer, load_mlps
@@ -85,10 +74,10 @@ def get_models():
     mlps = load_mlps()
     return tokenizer, encoder, mlps
 
-# ── Page config ─────────────────────────────────────────────────────────────────
+#Page config 
 st.set_page_config(page_title="REM Sleep Selectivity Profiler", page_icon="🧬", layout="wide")
 
-# ── Global CSS: fonts, tokens, card shell, native-widget styling ────────────────
+#Global CSS: fonts, tokens, card shell, native-widget styling
 st.markdown(
     """
 <style>
@@ -224,7 +213,7 @@ iframe { border: none !important; display: block; }
     unsafe_allow_html=True,
 )
 
-# ── Session state ───────────────────────────────────────────────────────────────
+# Session state 
 st.session_state.setdefault("results", None)   # list[{name, smiles, vals}] once a prediction runs
 st.session_state.setdefault("notice", None)
 
@@ -311,7 +300,7 @@ if run and smiles_raw:
                 for i, smi in enumerate(canonical)
             ]
             st.session_state["notice"] = None
-        except Exception as e:  # models/deps not available in this environment
+        except Exception as e:
             st.session_state["notice"] = (
                 "error",
                 "Could not run the model in this environment "
@@ -464,7 +453,7 @@ if molecules:
 
 
     # ════════════════════════════════════════════════════════════════════════════════
-    # 5. SELECTIVITY PROFILE  (iframe: Plotly grouped bars + custom fullscreen)
+    # 5. SELECTIVITY PROFILE
     # ════════════════════════════════════════════════════════════════════════════════
     chart_payload = {
         "targets": TARGETS,
@@ -623,7 +612,7 @@ CAVEATS = [
     "IC50-equivalent values are estimated as 10^(9 − pChEMBL) nM. pChEMBL is a standardised −log10(molar) scale that aggregates IC50, Ki, Kd and EC50 measurements — the displayed IC50 is an approximation and may not match a direct IC50 assay.",
 ]
 
-# ── Heatmap color math (ported from the prototype Component) ────────────────────
+# Heatmap color math
 def _heat_rgb(v: float):
     d0, d1 = 4.5, 9.0
     t = max(0.0, min(1.0, (v - d0) / (d1 - d0)))
@@ -654,7 +643,7 @@ def pchembl_to_ic50_str(v: float) -> str:
     else:
         return f"{nm / 1000:.1f} µM"
 
-# ── Model loading (cached; imports torch/transformers lazily) ───────────────────
+# Model loading
 @st.cache_resource(show_spinner="Loading MoLFormer-XL and MLP models (first run only)…")
 def get_models():
     from predict import load_molformer, load_mlps
@@ -662,10 +651,10 @@ def get_models():
     mlps = load_mlps()
     return tokenizer, encoder, mlps
 
-# ── Page config ─────────────────────────────────────────────────────────────────
+# Page config
 st.set_page_config(page_title="REM Sleep Selectivity Profiler", page_icon="🧬", layout="wide")
 
-# ── Global CSS: fonts, tokens, card shell, native-widget styling ────────────────
+# Global CSS: fonts, tokens, card shell, native-widget styling
 st.markdown(
     """
 <style>
@@ -812,7 +801,7 @@ iframe { border: none !important; display: block; }
     unsafe_allow_html=True,
 )
 
-# ── Session state ───────────────────────────────────────────────────────────────
+# Session state
 st.session_state.setdefault("results", None)   # list[{name, smiles, vals}] once a prediction runs
 st.session_state.setdefault("notice", None)
 
@@ -899,7 +888,7 @@ if run and smiles_raw:
                 for i, smi in enumerate(canonical)
             ]
             st.session_state["notice"] = None
-        except Exception as e:  # models/deps not available in this environment
+        except Exception as e:
             st.session_state["notice"] = (
                 "error",
                 "Could not run the model in this environment "
@@ -914,7 +903,7 @@ if st.session_state["notice"]:
 
 
 # ════════════════════════════════════════════════════════════════════════════════
-# 3. EXAMPLE COMPOUNDS  (iframe: clipboard copy + hover)
+# 3. EXAMPLE COMPOUNDS
 # ════════════════════════════════════════════════════════════════════════════════
 examples_payload = [
     {**e, "short": trunc(e["smiles"], 44)} for e in EXAMPLES
@@ -971,7 +960,7 @@ components.html(examples_html, height=170, scrolling=False)
 
 
 # ════════════════════════════════════════════════════════════════════════════════
-# 4. PREDICTED pChEMBL VALUES  (heatmap table, static markdown)
+# 4. PREDICTED pChEMBL VALUES
 # ════════════════════════════════════════════════════════════════════════════════
 if molecules:
     header_cells = (
@@ -1052,7 +1041,7 @@ if molecules:
 
 
     # ════════════════════════════════════════════════════════════════════════════════
-    # 5. SELECTIVITY PROFILE  (iframe: Plotly grouped bars + custom fullscreen)
+    # 5. SELECTIVITY PROFILE
     # ════════════════════════════════════════════════════════════════════════════════
     chart_payload = {
         "targets": TARGETS,
